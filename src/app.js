@@ -6,11 +6,13 @@ import  {MONGO_URI}  from "../config/keys.js";
 import "../models/User.js";
 
 import router from "../routes/auth.js";
+import postRouter from "../routes/post.js";
 
 const app = express();
 
 app.use(express.json());
 app.use(router);
+app.use(postRouter);
 
 mongoose.connect(MONGO_URI);
 mongoose.connection.on("connected", () => {

@@ -74,7 +74,3 @@ export const login = (req, res) => {
     .catch(err => console.log(err));
   })
 }
-
-export const dummyfn = (req, res) => {
-  res.send("hello user");
-}

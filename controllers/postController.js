@@ -11,6 +11,17 @@ export const getPosts = (req, res) => {
   .catch(err => console.log(err))
 }
 
+// @method  GET
+// @access  private
+// @desc    Get all Posts by a Single User
+export const getUserPosts = (req, res) => {
+  Post.find({postedBy: req.user._id}).populate("postedBy", "_id name email")
+  .then( posts => {
+    res.json({posts})
+  })
+  .catch(err => console.log(err))
+}
+
 // @method  POST
 // @access  private
 // @desc    Create a post

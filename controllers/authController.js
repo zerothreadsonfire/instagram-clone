@@ -66,8 +66,9 @@ export const login = (req, res) => {
     .then(doMatch => {
       if(doMatch === true) {
         // res.json({message: "successfull login"});
+        const {_id, name, email} = savedUser;
         const token = jsonwebtoken.sign({_id: savedUser._id}, JWT_SECRET);
-        res.json({token});
+        res.json({ token, user: {_id, name, email} });
       } 
       else res.json({error: "Invalid email/password"})
     }) 

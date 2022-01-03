@@ -26,15 +26,16 @@ export const getUserPosts = (req, res) => {
 // @access  private
 // @desc    Create a post
 export const createPost = (req, res) => {
-  const { title, body } = req.body;
+  const { title, body, imageUrl } = req.body;
 
-  if(!title || !body) {
+  if(!title || !body || !imageUrl) {
     return res.status(422).json({error: "Please add all the required fields"})
   }
 
   const newPost = new Post({
     title,
     body,
+    photo:imageUrl,
     postedBy: req.user
   })
 

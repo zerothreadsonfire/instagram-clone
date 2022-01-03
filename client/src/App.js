@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import './App.css';
 
@@ -8,11 +9,24 @@ import Login from "./components/Login";
 import Profile from "./components/Profile";
 import SignUp from "./components/SignUp";
 import CreatePost from "./components/CreatePost";
+import { initialState, userReducer } from "./reducers/userReducer";
 
-function App() {
+export const userContext = React.createContext();
+
+const App = () => {
+  const [state, dispatch] = React.useReducer(userReducer, initialState);
+
+  const history = useNavigate();
+
+  React.useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(user) history("/");
+    else history("/login");
+  }, []);
+
   return (
     <div className="App">
-      <BrowserRouter>
+      <userContext.Provider value={{state, dispatch}}>
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -21,7 +35,7 @@ function App() {
           <Route exact path="/profile" element={<Profile />}/>
           <Route exact path="/create" element={<CreatePost />}/>
         </Routes>
-      </BrowserRouter>
+      </userContext.Provider>
     </div>
   );
 }

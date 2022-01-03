@@ -1,18 +1,41 @@
+import React from "react";
+
 const Home = () => {
+  const [data, setData] = React.useState();
+
+  React.useEffect(() => {
+    fetch("/allposts", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization":"Bearer "+localStorage.getItem("jwt"),
+      }
+    }).then(res => res.json())
+    .then(res => {
+      setData(res);
+    })
+  }, []);
+
   return(
     <div className="home">
-      <div className="card home-card">
-        <h5>Ramesh</h5>
-        <div className="card-image">
-          <img src="https://images.pexels.com/photos/10344100/pexels-photo-10344100.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></img>
-        </div>
-        <div className="card-content">
-          <i className="material-icons">favorite</i>
-          <h6>Title</h6>
-          <p>Thi is a post</p>
-          <input type="text" placeholder="add a comment" />
-        </div>
-      </div>
+      {
+        data && data.posts.map( post => {
+          return (
+            <div className="card home-card" key={post._id}>
+              <h5>{post.postedBy.name}</h5>
+              <div className="card-image">
+                <img src={post.photo} alt=""></img>
+              </div>
+              <div className="card-content">
+                <i className="material-icons">favorite</i>
+                <h6>{post.title}</h6>
+                <p>{post.body}</p>
+                <input type="text" placeholder="add a comment" />
+              </div>
+            </div>
+          )
+        })
+      }
     </div>
   )
 }

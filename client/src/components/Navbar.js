@@ -9,13 +9,13 @@ const Navbar = () => {
   const renderList = () => {
     if(state) {
       return [
-        <li><Link to="/profile">Profile</Link></li>,
-        <li><Link to="/create">Create Post</Link></li>
+        <li key="1"><Link to="/profile">Profile</Link></li>,
+        <li key="2"><Link to="/create">Create Post</Link></li>
       ]
     } else {
       return [
-        <li><Link to="/login">Login</Link></li>,
-        <li><Link to="/signup">SignUp</Link></li> 
+        <li key="1"><Link to="/login">Login</Link></li>,
+        <li key="2"><Link to="/signup">SignUp</Link></li> 
       ]
     }
   }

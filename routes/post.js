@@ -6,7 +6,7 @@ import { requireLogin } from "../middlewares/requireLogin.js";
 
 const router = express.Router();
 
-router.get("/myposts", requireLogin, getUserPosts).get("/allposts", getPosts);
+router.get("/myposts", requireLogin, getUserPosts).get("/allposts", requireLogin, getPosts);
 router.post("/createpost", requireLogin, createPost)
 
 export default router;
